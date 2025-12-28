@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Analytical Report | Pham Quang Huy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .chart-container { position: relative; width: 100%; height: 350px; }
+        .kpi-card { transition: transform 0.2s; }
+        .kpi-card:hover { transform: translateY(-5px); }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <!-- Navigation Back -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-slate-500 hover:text-blue-600 transition mr-4">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </a>
+                    <span class="text-xl font-bold text-slate-900 tracking-tight">Sales Analytical Report</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="document.getElementById('tech-report').scrollIntoView({behavior: 'smooth'})" class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition">Read Technical Findings</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- Executive Summary -->
+        <section>
+            <div class="mb-6">
+                <h2 class="text-3xl font-bold text-slate-900">Performance Snapshot</h2>
+                <p class="text-slate-500 mt-1">Key metrics identifying profitability gaps and market concentration risks.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 kpi-card">
+                    <p class="text-sm font-medium text-slate-500">Gross Sales</p>
+                    <p class="text-2xl font-bold text-slate-900 mt-1">205.7M <span class="text-blue-600 text-lg">$</span></p>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 kpi-card">
+                    <p class="text-sm font-medium text-slate-500">Net Revenue</p>
+                    <p class="text-2xl font-bold text-slate-900 mt-1">177.3M <span class="text-emerald-600 text-lg">$</span></p>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 kpi-card">
+                    <p class="text-sm font-medium text-slate-500">Units Sold</p>
+                    <p class="text-2xl font-bold text-slate-900 mt-1">34.4K <span class="text-purple-600 text-lg">#</span></p>
+                </div>
+                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 kpi-card border-l-4 border-l-amber-400">
+                    <p class="text-sm font-medium text-slate-500">"Unidentified" Impact</p>
+                    <p class="text-2xl font-bold text-amber-600 mt-1">8.5% <span class="text-sm text-slate-400 font-normal">of Sales</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Market Dominance -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Market Dominance Matrix</h3>
+                <p class="text-xs text-slate-500 mb-4 uppercase tracking-wide">Revenue by Country & Channel ("The Big Three")</p>
+                <div class="chart-container">
+                    <canvas id="matrixChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Ticket Size Distribution -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Revenue Distribution</h3>
+                <p class="text-xs text-slate-500 mb-4 uppercase tracking-wide">Transaction Volume by Ticket Size Tier</p>
+                <div class="chart-container">
+                    <canvas id="ticketSizeChart"></canvas>
+                </div>
+            </div>
+            
+             <!-- Brand Pareto -->
+             <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 lg:col-span-2">
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Brand Portfolio Performance</h3>
+                <p class="text-xs text-slate-500 mb-4 uppercase tracking-wide">Top 5 Brands by Gross Sales (Pareto Analysis)</p>
+                <div class="chart-container h-80">
+                    <canvas id="brandParetoChart"></canvas>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TECHNICAL REPORT TEXT -->
+        <section id="tech-report" class="bg-slate-900 rounded-xl shadow-lg overflow-hidden text-slate-300">
+            <div class="bg-slate-800 px-8 py-6 border-b border-slate-700">
+                <h2 class="text-2xl font-bold text-white"><i class="fas fa-file-alt mr-3"></i>Technical Report Findings</h2>
+                <p class="text-slate-400 text-sm mt-1">Methodology and Strategic Justifications</p>
+            </div>
+            
+            <div class="p-8 space-y-10">
+                
+                <!-- 1. Revenue Structure -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4 border-l-4 border-blue-500 pl-3">1. Revenue Structure and Profitability</h3>
+                    <div class="space-y-4">
+                        <div class="bg-slate-800/50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-blue-300">Low-Value Concentration</h4>
+                            <p class="text-sm mt-1">The business model is heavily skewed towards high-volume, low-value transactions (Gross Sales overwhelmingly in the <strong>$0 - 49K</strong> range).</p>
+                            <p class="text-xs text-slate-400 mt-2 italic"><i class="fas fa-lightbulb mr-1"></i>Strategic Implication: Margins in this segment are highly vulnerable to increases in operational costs (shipping, platform fees).</p>
+                        </div>
+                        <div class="bg-slate-800/50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-blue-300">Zero-Revenue Orders</h4>
+                            <p class="text-sm mt-1">A structural feature of the sales strategy involves aggressive 100% promotions (sampling/gifting), resulting in thousands of zero-revenue transactions annually.</p>
+                            <p class="text-xs text-slate-400 mt-2 italic"><i class="fas fa-lightbulb mr-1"></i>Strategic Implication: This creates a "Phantom Revenue" effect where operational effort does not translate to top-line growth.</p>
+                        </div>
+                        <div class="bg-slate-800/50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-blue-300">Single-Item Inefficiency</h4>
+                            <p class="text-sm mt-1">Single-item orders are the least efficient, showing a <strong>~36%</strong> reduction in value realization (Gross vs. Net Sales).</p>
+                            <p class="text-xs text-slate-400 mt-2 italic"><i class="fas fa-lightbulb mr-1"></i>Strategic Implication: Strategies such as product bundling are crucial for increasing basket size and enhancing the Net/Gross ratio.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Market Dominance -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4 border-l-4 border-emerald-500 pl-3">2. Market Dominance (Country & Marketplace)</h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-slate-800/50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-emerald-300">The "Big Three" Corridors</h4>
+                            <ul class="list-disc list-inside text-sm mt-2 space-y-1">
+                                <li>PH - Shopee ($54.3M)</li>
+                                <li>TH - Shopee ($42.8M)</li>
+                                <li>TH - Lazada ($28.3M)</li>
+                            </ul>
+                            <p class="text-xs text-slate-400 mt-2 italic"><i class="fas fa-exclamation-triangle mr-1"></i>Strategic Implication: Disruption in PH/TH Shopee operations poses a systemic risk.</p>
+                        </div>
+                        <div class="bg-slate-800/50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-emerald-300">Emerging TikTok Shop (TTK)</h4>
+                            <p class="text-sm mt-1">TTK is the <strong>exclusive</strong> recorded volume source for Malaysia (MY) in the provided sample.</p>
+                            <p class="text-xs text-slate-400 mt-2 italic"><i class="fas fa-lightbulb mr-1"></i>Strategic Implication: Malaysia requires a video-first, TikTok-exclusive content strategy.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Brand Portfolio -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4 border-l-4 border-purple-500 pl-3">3. Brand Portfolio Performance</h3>
+                    <div class="space-y-4">
+                        <div class="bg-slate-800/50 p-4 rounded-lg flex flex-col md:flex-row gap-4">
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-purple-300">Reliance on "Brand 2"</h4>
+                                <p class="text-sm mt-1">Undisputed market leader generating <strong>~$104.7M</strong> (3x runner-up) with premium ticket size (~$15.6K).</p>
+                            </div>
+                            <div class="flex-1 border-t md:border-t-0 md:border-l border-slate-700 pt-4 md:pt-0 md:pl-4">
+                                <h4 class="font-semibold text-purple-300">"Unidentified Brand" Volume</h4>
+                                <p class="text-sm mt-1">Top-tier volume contributor (~$17.6M) but very low median value (~$525). Represents the "Mass Market".</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-8 text-center">
+        <p class="text-slate-500 text-sm">&copy; 2025 Pham Quang Huy. Case Study Report.</p>
+    </footer>
+
+    <!-- Chart Logic -->
+    <script>
+        const commonOptions = { responsive: true, maintainAspectRatio: false };
+
+        // 1. Matrix Chart
+        new Chart(document.getElementById('matrixChart'), {
+            type: 'bar',
+            data: {
+                labels: ['PH - Shopee', 'TH - Shopee', 'TH - Lazada', 'PH - Lazada', 'SG - Shopee'],
+                datasets: [{
+                    label: 'Net Revenue ($)',
+                    data: [54299338, 42753801, 28334561, 22854095, 17072450],
+                    backgroundColor: ['#1e3a8a', '#1e40af', '#2563eb', '#3b82f6', '#60a5fa'],
+                    borderRadius: 4
+                }]
+            },
+            options: { ...commonOptions, indexAxis: 'y', plugins: { legend: { display: false } } }
+        });
+
+        // 2. Ticket Size
+        new Chart(document.getElementById('ticketSizeChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Low (<50k)', 'Mid (50-200k)', 'High (>200k)'],
+                datasets: [{
+                    label: 'Volume',
+                    data: [15000, 4500, 1200], // Simulated skew
+                    backgroundColor: ['#94a3b8', '#60a5fa', '#1e40af']
+                }]
+            },
+            options: { ...commonOptions, plugins: { legend: { display: false } } }
+        });
+
+        // 3. Brand Pareto
+        new Chart(document.getElementById('brandParetoChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Brand 2', 'Brand 5', 'Brand 3', 'Unidentified', 'Brand 6'],
+                datasets: [{
+                    label: 'Gross Sales ($)',
+                    data: [104756964, 36804228, 24065687, 17589237, 16918267],
+                    backgroundColor: ['#1e3a8a', '#2563eb', '#60a5fa', '#f59e0b', '#94a3b8'],
+                    borderRadius: 4
+                }]
+            },
+            options: { ...commonOptions, plugins: { legend: { display: false } } }
+        });
+    </script>
+</body>
+</html>
